@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XDlopMobile</title>
+</head>
+<body>
+<div>
+    <table border="1" cellpadding="3" cellspacing="0">
+        <tr>
+            <td>Nokia</td>
+            <td><input type="button" onclick="powerNokia()" value="Power"></td>
+        </tr>
+        <tr>
+            <td>Status Phone</td>
+            <td><span id="statusNokia"></span></td>
+        </tr>
+        <tr>
+            <td>Status Battery</td>
+            <td><span id="statusBatteryNo"></span></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="Send" onclick="sendNo()">
+            <input type="button" value="Save" onclick="saveNo()"></td>
+            <td><input id="mesNo" type="text"></td>
+        </tr>
+        <tr>
+            <td>Draft</td>
+            <td><p id="DraftNo" type="text"></p></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="Charge" onclick="chargeNo()"></td>
+            <td><p id="showMessNo"></p></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <table border="1" cellpadding="3" cellspacing="0">
+        <tr>
+            <td>Iphone</td>
+            <td><input type="button" onclick="powerIp()" value="Power"></td>
+        </tr>
+        <tr>
+            <td>Status Phone</td>
+            <td><span id="statusIp"></span></td>
+        </tr>
+        <tr>
+            <td>Status Battery</td>
+            <td><span id="statusBatteryIp"></span></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="Send" onclick="sendIp()">
+                <input type="button" value="Save" onclick="saveIp()"></td>
+            <td><input id="mesIp" type="text"></td>
+        </tr>
+        <tr>
+            <td>Draft</td>
+            <td><p id="DraftIp" type="text"></p></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="Charge" onclick="chargeIp()"></td>
+            <td><p id="showMessIp"></p></td>
+        </tr>
+    </table>
+</div>
+<script>
+    let arrNo=[];
+    let arrIp=[];
+    function Mobile(name,battery) {
+        this.name= name;
+        this.battery=battery;
+        this.charge=function (battery) {
+            if(this.battery < 100){
+                this.battery+=2;
+                document.getElementById("statusBatteryNo").innerHTML = mobile1.battery;
+                document.getElementById("statusBatteryIp").innerHTML = mobile2.battery;
+            }else{
+                alert("Pin đầy");
+            }
+        },
+        this.showMess=function () {
+            let result ="";
+            if (this.name==="nokia"){
+                for(i=0; i<arrNo.length; i++){
+                    result+= arrNo[i];
+                    document.getElementById("showMessIp").innerHTML= result + "<br>";
+                }
+            }
+            if (this.name==="iphone"){
+                for(i=0; i<arrIp.length; i++){
+                    result+= arrIp[i];
+                    document.getElementById("showMessNo").innerHTML= result + "<br>";
+                }
+            }
+        },
+        this.sendMess=function () {
+            if(this.name==="nokia"){
+                let messageNo = document.getElementById("mesNo").value;
+                arrNo.push(messageNo);
+                this.battery--;
+                document.getElementById("statusBatteryNo").innerHTML= mobile1.battery;
+            }
+            if(this.name=="iphone"){
+                let messageIp=document.getElementById("mesIp").value;
+                arrIp.push(messageIp);
+                this.battery--;
+                document.getElementById("statusBatteryIp").innerHTML= mobile2.battery;
+            }
+        }
+        this.draftMess=function () {
+            if(this.name==="nokia"){
+                let messageNo = document.getElementById("mesNo").value;
+                document.getElementById("DraftNo").innerHTML= messageNo;
+                this.battery--;
+                document.getElementById("statusBatteryNo").innerHTML= mobile1.battery;
+            }
+            if(this.name==="iphone"){
+                let messageIp = document.getElementById("mesIp").value;
+                document.getElementById("DraftIp").innerHTML= messageIp;
+                this.battery--;
+                document.getElementById("statusBatteryIp").innerHTML= mobile2.battery;
+            }
+        }
+    }
+    let mobile1= new Mobile("nokia",50);
+    let mobile2= new Mobile("iphone",50);
+    function chargeNo() {
+        mobile1.charge();
+    }
+    function chargeIp() {
+        mobile2.charge();
+    }
+    function sendNo() {
+        mobile1.sendMess();
+        mobile1.showMess();
+    }
+    function sendIp() {
+        mobile2.sendMess();
+        mobile2.showMess();
+    }
+    function saveNo() {
+        mobile1.draftMess();
+    }
+    function saveIp() {
+        mobile2.draftMess();
+    }
+</script>
+</body>
+</html>
